@@ -10,6 +10,7 @@ namespace recipe_store.Pages
         Database database = new Database();
         private ObservableCollection<Users> users = new ObservableCollection<Users>();
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+        private ObservableCollection<Role> roles = new ObservableCollection<Role>();
         public EditProfile()
         {
             InitializeComponent();
@@ -19,6 +20,7 @@ namespace recipe_store.Pages
         {
             LoadComboBox_UserLogin();
             LoadComboBox_UserStatus();
+            LoadComboBox_UserRole();
         }
 
         private void LoadComboBox_UserLogin()
@@ -86,6 +88,37 @@ namespace recipe_store.Pages
             }
         }
 
+        private void LoadComboBox_UserRole()
+        {
+            try
+            {
+                database.openConnection();
+
+                string query = "SELECT * FROM Role";
+
+                SqlCommand command = new SqlCommand(query, database.getConnection());
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Role userRole = new Role
+                    {
+                        id = Convert.ToInt32(reader["id"]),
+                        role = reader["Role"].ToString(),
+                    };
+                    roles.Add(userRole);
+                }
+                database.closeConnection();
+
+                ComboBox_UserRole.ItemsSource = roles;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при загрузке пользователей: " + ex.Message);
+            }
+        }
+
         private int GetStatus(int status)
         {
             if (ComboBox_UserStatus.Text == "Заблокирован")
@@ -95,6 +128,24 @@ namespace recipe_store.Pages
             if (ComboBox_UserStatus.Text == "В системе")
             {
                 return status = 1;
+            }
+            return 0;
+        }
+
+        private int GetRole(int role)
+        {
+            if (ComboBox_UserRole.Text == "Администратор")
+            {
+                MessageBox.Show("Вы не можете изменить статус этого пользователя!");
+                return role = 0;
+            }
+            if (ComboBox_UserRole.Text == "Повар")
+            {
+                return role = 2;
+            }
+            if (ComboBox_UserRole.Text == "Подписчик")
+            {
+                return role = 3;
             }
             return 0;
         }
@@ -109,18 +160,29 @@ namespace recipe_store.Pages
         private void Btn_Edit_Click(object sender, RoutedEventArgs e)
         {
             int status = 0;
+            int role = 0;
             status = GetStatus(status);
+            role = GetRole(role);
             try
             {
-                database.openConnection();
+                if(role == 0)
+                {
+                    MessageBox.Show("Не удалось обновить статус");
+                }
+                else
+                {
+                    database.openConnection();
 
-                string query = $"UPDATE Users set UserStatus = '{status}' WHERE UserLogin = '{ComboBox_UserName.Text}'";
+                    string query = $"UPDATE Users set UserStatus = '{status}', UserRole = '{role}' WHERE UserLogin = '{ComboBox_UserName.Text}'";
 
-                SqlCommand command = new SqlCommand(query, database.getConnection());
+                    SqlCommand command = new SqlCommand(query, database.getConnection());
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-                database.closeConnection();
+                    database.closeConnection();
+
+                    MessageBox.Show("Статус успешно изменен!");
+                }
             }
             catch (Exception ex)
             {

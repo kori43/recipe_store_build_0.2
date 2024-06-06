@@ -24,6 +24,7 @@
 
         <ComboBox x:Name="ComboBox_UserName" Grid.Row="1" Grid.Column="1" Margin="20" DisplayMemberPath="UserLogin"/>
         <ComboBox x:Name="ComboBox_UserStatus" Grid.Row="2" Grid.Column="1" Margin="20" DisplayMemberPath="status"/>
+        <ComboBox x:Name="ComboBox_UserRole" Grid.Row="3" Grid.Column="1" Margin="20" DisplayMemberPath="role"/>
 
         <Menu Grid.Row="0" Background="#FFB140" Margin="5">
             <MenuItem Header="Меню" Background="#FFB140">
