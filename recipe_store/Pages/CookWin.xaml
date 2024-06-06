@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:recipe_store.Pages"
         mc:Ignorable="d"
-        Title="Окно повара" Height="450" Width="800">
+        Title="Окно повара" Height="450" Width="800"  Background="Wheat" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="370*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="5" Background="#FFB140" Grid.ColumnSpan="2">
+            <TextBlock Text="Рецепты" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <DataGrid x:Name="DGRecipes" Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" AutoGenerateColumns="True" IsReadOnly="True" CanUserAddRows="False"/>
+
+        <Menu Grid.Row="0" Background="#FFB140" Margin="5,5,5,5">
+            <MenuItem Header="Меню" Background="#FFB140">
+                <MenuItem x:Name="Btn_Edit" Header="Редактировать статус"></MenuItem>
+                <MenuItem x:Name="Btn_Delete" Header="Удалить профиль"></MenuItem>
+                <MenuItem x:Name="Btn_Exit" Header="Выход"></MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>
