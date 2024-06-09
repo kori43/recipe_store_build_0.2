@@ -1,14 +1,12 @@
 ﻿using recipe_store.AddPages;
 using recipe_store.Classes;
+using recipe_store.EditPages;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Windows;
 
 namespace recipe_store.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для CookWin.xaml
-    /// </summary>
     public partial class CookWin : Window
     {
         Database database = new Database();
@@ -73,6 +71,12 @@ namespace recipe_store.Pages
         private void Btn_Delete_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Btn_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            EditRecipe editRecipe = new EditRecipe();
+            editRecipe.Show();
         }
     }
 }
