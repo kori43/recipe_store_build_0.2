@@ -165,7 +165,7 @@ namespace recipe_store.Pages
             role = GetRole(role);
             try
             {
-                if(role == 0)
+                if (role == 0)
                 {
                     MessageBox.Show("Не удалось обновить статус");
                 }

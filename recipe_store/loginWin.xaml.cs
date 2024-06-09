@@ -31,7 +31,7 @@ namespace recipe_store
             string userLogin = TextBox_Login.Text;
             string userPassword = PasswordBox_Password.Password;
 
-            string query = "SELECT UserRole, UserStatus FROM Users WHERE UserLogin = @Userlogin AND UserPassword = @UserPassword";
+            string query = "SELECT id, UserName, UserRole, UserStatus FROM Users WHERE UserLogin = @Userlogin AND UserPassword = @UserPassword";
 
             database.openConnection();
 
@@ -43,8 +43,10 @@ namespace recipe_store
             SqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
-                int roleId = reader.GetInt32(0);
-                int status = reader.GetInt32(1);
+                int userId = reader.GetInt32(0);
+                string userName = reader.GetString(1);
+                int roleId = reader.GetInt32(2);
+                int status = reader.GetInt32(3);
                 try
                 {
                     if (status == 2)
@@ -64,6 +66,7 @@ namespace recipe_store
                                 break;
                             case 2:
                                 CookWin cookWin = new CookWin();
+                                cookWin.SetUserInfo(userId, userName);
                                 cookWin.Show();
                                 this.Close();
                                 break;

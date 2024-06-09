@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:recipe_store.Pages"
         mc:Ignorable="d"
-        Title="Окно повара" Height="450" Width="800"  Background="Wheat" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
+        Title="Окно повара" Height="450" Width="800" Background="Wheat" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20*"/>
@@ -24,10 +24,18 @@
 
         <Menu Grid.Row="0" Background="#FFB140" Margin="5,5,5,5">
             <MenuItem Header="Меню" Background="#FFB140">
-                <MenuItem x:Name="Btn_Edit" Header="Редактировать статус"></MenuItem>
-                <MenuItem x:Name="Btn_Delete" Header="Удалить профиль"></MenuItem>
-                <MenuItem x:Name="Btn_Exit" Header="Выход"></MenuItem>
+                <MenuItem x:Name="Btn_Create" Header="Создать рецепт" Click="Btn_Create_Click"></MenuItem>
+                <MenuItem x:Name="Btn_Delete" Header="Удалить рецепт" Click="Btn_Delete_Click"></MenuItem>
+                <MenuItem x:Name="Btn_Exit" Header="Выход" Click="Btn_Exit_Click"></MenuItem>
             </MenuItem>
         </Menu>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Width="160" Height="250" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="#36D695" Margin="10,10,10,10">
+            <TextBlock Text=" User ID-card" FontSize="16" Margin="10"/>
+            <TextBlock Text="Id:" FontSize="16" Margin="8"/>
+            <TextBox x:Name="TextBox_UserId" Margin="10" IsReadOnly="True" Background="#FFB140"/>
+            <TextBlock Text="Name:" FontSize="16" Margin="8"/>
+            <TextBox x:Name="TextBox_UserName" Margin="10" IsReadOnly="True" Background="#FFB140"/>
+        </StackPanel>
     </Grid>
 </Window>
