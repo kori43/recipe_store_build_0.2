@@ -2,9 +2,6 @@
 
 namespace recipe_store.EditPages
 {
-    /// <summary>
-    /// Логика взаимодействия для EditRecipe.xaml
-    /// </summary>
     public partial class EditRecipe : Window
     {
         public EditRecipe()

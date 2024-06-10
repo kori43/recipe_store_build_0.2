@@ -3,7 +3,10 @@ using recipe_store.Classes;
 using recipe_store.EditPages;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.Reflection.PortableExecutable;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace recipe_store.Pages
 {
@@ -57,6 +60,102 @@ namespace recipe_store.Pages
             }
         }
 
+        private bool CanToDeleteRecipe(Recipes selectedRecipe)
+        {
+            try
+            {               
+                if (selectedRecipe != null)
+                {
+                    database.openConnection();
+
+                    string query = "SELECT Author FROM Recipes WHERE id = @id";
+
+                    SqlCommand command = new SqlCommand(query, database.getConnection());
+
+                    command.Parameters.AddWithValue("@id", selectedRecipe.Id);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        string author = reader.GetString(0);
+
+                        database.closeConnection();
+
+                        if (author != TextBox_UserName.Text) 
+                        {
+                            MessageBox.Show("Вы не можете удалить чужую запись!");
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Произошла ошибка чтения!");
+                        return false;
+                    }                   
+                }
+                else
+                {
+                    MessageBox.Show("Выберите запись для удаления!");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при удалении записи: " + ex.Message);
+                return false;
+            }
+        }
+
+        private bool DeleteRecipe(int Id)
+        {            
+            try
+            {
+                var selectedRecipe = recipes.FirstOrDefault(item => item.Id == Id);
+                if(CanToDeleteRecipe(selectedRecipe))
+                {
+                    if (selectedRecipe != null)
+                    {
+                        recipes.Remove(selectedRecipe);
+
+                        database.openConnection();
+
+                        string query = "DELETE FROM Recipes WHERE id = @id";
+
+                        SqlCommand command = new SqlCommand(query, database.getConnection());
+
+                        command.Parameters.AddWithValue("@id", Id);
+                        command.ExecuteNonQuery();
+
+                        database.closeConnection();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при удалении записи: " + ex.Message);
+                return false;
+            }
+        }
+
+        private void AddPage_Closed(object sender, System.EventArgs e)
+        {
+            LoadRecipes();
+        }
+
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -64,13 +163,40 @@ namespace recipe_store.Pages
 
         private void Btn_Create_Click(object sender, RoutedEventArgs e)
         {
-            AddPage addpage = new AddPage();
+            string author = TextBox_UserName.Text;
+            AddPage addpage = new AddPage(author);
+            addpage.Closed += AddPage_Closed;
             addpage.Show();
+
+            LoadRecipes();
         }
 
         private void Btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                Recipes selectedRecipe = DGRecipes.SelectedItem as Recipes;
+                if (selectedRecipe == null)
+                {
+                    MessageBox.Show("Выберите рецепт для удаления.", "Внимание");
+                    return;
+                }
+                int id = selectedRecipe.Id;
+                bool success = DeleteRecipe(id);
+                if (success)
+                {
+                    LoadRecipes();
+                    MessageBox.Show("Рецепт успешно удален!");
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка при удалении записи");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при удалении записи: " + ex.Message);
+            }
         }
 
         private void Btn_Edit_Click(object sender, RoutedEventArgs e)
