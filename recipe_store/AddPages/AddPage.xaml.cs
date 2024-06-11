@@ -1,11 +1,9 @@
-﻿using System.Data.SqlClient;
+﻿using recipe_store.Classes;
+using System.Data.SqlClient;
 using System.Windows;
-using System.Windows.Controls;
-using recipe_store.Classes;
-using recipe_store.Pages;
 
 namespace recipe_store.AddPages
-{  
+{
     public partial class AddPage : Window
     {
         Database database = new Database();
@@ -20,7 +18,7 @@ namespace recipe_store.AddPages
         {
             var recipe = TextBox_RecipeName.Text;
 
-            if (recipe != null) 
+            if (recipe != null)
             {
                 try
                 {
@@ -43,7 +41,7 @@ namespace recipe_store.AddPages
         private void Btn_Create_Click(object sender, RoutedEventArgs e)
         {
             CreateRecipe();
-            
+
         }
 
         private void Btn_Back_Click(object sender, RoutedEventArgs e)

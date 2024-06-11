@@ -29,7 +29,6 @@
             </TabItem>
         </TabControl>
 
-
         <Menu Grid.Row="0" Background="#FFB140" Margin="5,5,5,5">
             <MenuItem Header="Меню" Background="#FFB140">
                 <MenuItem x:Name="Btn_Edit" Header="Редактировать статус" Click="Btn_Edit_Click"></MenuItem>

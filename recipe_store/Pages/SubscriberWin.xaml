@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:recipe_store.Pages"
         mc:Ignorable="d"
-        Title="Окно подписчика" Height="450" Width="800">
+        Title="Окно подписчика" Height="450" Width="800" Background="Wheat" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="370*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="5" Background="#FFB140" Grid.ColumnSpan="2">
+            <TextBlock Text="Сохраненные рецепты" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <TabControl Grid.Row="1" Grid.Column="1" Margin="10,20,10,10">
+            <TabItem Header="Рецепты">
+                <DataGrid x:Name="DGRecipes" AutoGenerateColumns="True" IsReadOnly="True" CanUserAddRows="False"/>
+            </TabItem>
+            <TabItem Header="Сохраненные">
+                <DataGrid x:Name="DGSubscriber" AutoGenerateColumns="True" IsReadOnly="True" CanUserAddRows="False"/>
+            </TabItem>
+        </TabControl>
+
+        <Menu Grid.Row="0" Background="#FFB140" Margin="5,5,5,5">
+            <MenuItem Header="Меню" Background="#FFB140">
+                <MenuItem x:Name="Btn_Save" Header="Сохранить" Click="Btn_Save_Click"></MenuItem>
+                <MenuItem x:Name="Btn_Delete" Header="Удалить" Click="Btn_Delete_Click"></MenuItem>
+                <MenuItem x:Name="Btn_Exit" Header="Выход" Click="Btn_Exit_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

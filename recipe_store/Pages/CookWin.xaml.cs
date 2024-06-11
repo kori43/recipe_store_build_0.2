@@ -1,12 +1,8 @@
 ﻿using recipe_store.AddPages;
 using recipe_store.Classes;
-using recipe_store.EditPages;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
-using System.Reflection.PortableExecutable;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace recipe_store.Pages
 {
@@ -63,7 +59,7 @@ namespace recipe_store.Pages
         private bool CanToDeleteRecipe(Recipes selectedRecipe)
         {
             try
-            {               
+            {
                 if (selectedRecipe != null)
                 {
                     database.openConnection();
@@ -81,7 +77,7 @@ namespace recipe_store.Pages
 
                         database.closeConnection();
 
-                        if (author != TextBox_UserName.Text) 
+                        if (author != TextBox_UserName.Text)
                         {
                             MessageBox.Show("Вы не можете удалить чужую запись!");
                             return false;
@@ -95,7 +91,7 @@ namespace recipe_store.Pages
                     {
                         MessageBox.Show("Произошла ошибка чтения!");
                         return false;
-                    }                   
+                    }
                 }
                 else
                 {
@@ -111,11 +107,11 @@ namespace recipe_store.Pages
         }
 
         private bool DeleteRecipe(int Id)
-        {            
+        {
             try
             {
                 var selectedRecipe = recipes.FirstOrDefault(item => item.Id == Id);
-                if(CanToDeleteRecipe(selectedRecipe))
+                if (CanToDeleteRecipe(selectedRecipe))
                 {
                     if (selectedRecipe != null)
                     {
@@ -142,7 +138,7 @@ namespace recipe_store.Pages
                 {
                     return false;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -197,12 +193,6 @@ namespace recipe_store.Pages
             {
                 MessageBox.Show("Ошибка при удалении записи: " + ex.Message);
             }
-        }
-
-        private void Btn_Edit_Click(object sender, RoutedEventArgs e)
-        {
-            EditRecipe editRecipe = new EditRecipe();
-            editRecipe.Show();
         }
     }
 }

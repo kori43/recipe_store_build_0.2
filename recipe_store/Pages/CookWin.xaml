@@ -25,7 +25,6 @@
         <Menu Grid.Row="0" Background="#FFB140" Margin="5,5,5,5">
             <MenuItem Header="Меню" Background="#FFB140">
                 <MenuItem x:Name="Btn_Create" Header="Создать рецепт" Click="Btn_Create_Click"></MenuItem>
-                <MenuItem x:Name="Btn_Edit" Header="Редактировать рецепт" Click="Btn_Edit_Click"></MenuItem>
                 <MenuItem x:Name="Btn_Delete" Header="Удалить рецепт" Click="Btn_Delete_Click"></MenuItem>
                 <MenuItem x:Name="Btn_Exit" Header="Выход" Click="Btn_Exit_Click"></MenuItem>
             </MenuItem>
