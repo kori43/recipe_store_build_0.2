@@ -89,6 +89,7 @@ namespace recipe_store
             else
             {
                 MessageBox.Show("Такого аккаунта не существует!", "Ошибка");
+                database.closeConnection();
             }
         }
 
