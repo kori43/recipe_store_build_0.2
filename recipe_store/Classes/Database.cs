@@ -5,7 +5,7 @@ namespace recipe_store.Classes
 {
     public class Database
     {
-        SqlConnection sqlConnection = new SqlConnection(@"Data Source=;Initial Catalog=recipe_store;Integrated Security=True");
+        SqlConnection sqlConnection = new SqlConnection(@"Initial Catalog=recipe_store;Integrated Security=True");
         public void openConnection()
         {
             if (sqlConnection.State == System.Data.ConnectionState.Closed)
